@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Componente - Slider</title>
+</head>
+<style type="text/css">
+	.slider-abc {
+		background-color: #bbbbbb; 
+		margin: auto;
+		width: 40%;
+		overflow: hidden;
+		padding: 10px; 
+		border-radius: 10px; 
+		font-family: arial; 
+	}
+	.slider-abc ul {
+		display: flex; 
+		padding: 0px; 
+		width: 200%; 
+		animation: ann 4s infinite alternate linear;  
+	}
+	@keyframes ann{
+		0% { margin-left: 0%; }
+		40% { margin-left: -100%; }
+		60% { margin-left: -100%;  }
+		80% { margin-left: 0%; }
+		100% { margin-left: 0%; }
+	}
+	.slider-abc ul li {
+		width: 100%; 
+		list-style: none;
+		padding-left: 10px;
+	}
+</style>
+<body>
+
+	<div class="slider-abc">
+		<ul>
+			<li>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</li>
+			<li>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</li>
+		</ul>
+	</div>
+
+</body>
+</html>
