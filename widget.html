@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+</head>
+	<style type="text/css">
+	/* div para abrir los tipos de contacto */ 
+	.contact-activator {
+			width: 45px; 
+			height: 45px; 
+			position: absolute;
+			border-radius: 50%; 
+			bottom: 0px;
+			z-index: 999;
+		}
+		.contact-activator:hover {
+			transition: all;
+			transition-duration: .4s;
+			box-shadow: 0px 0px 15px 2px rgb(84, 133, 196);
+		}
+		#roll-open {
+			transform: rotate(90deg);
+			transition-property: all; 
+			transition-duration: .2s;
+		}
+		#roll-close {
+			transform: rotate(360deg);
+			transition-property: all; 
+			transition-duration: .5s;
+		}
+		/* div para abrir los tipos de contacto */ 
+		/* estados del div activador */ 
+		.contact-active {
+			background-image: url(http://laptopmexico.mx/media/imagenes/widget-media/message-logo.png); 
+			width: 45px; 
+			height: 45px; 
+			position: absolute;
+			border-radius: 50%; 
+			background-size: cover;
+			background-size: 55px;
+    		background-position: -4px -4px;
+		}
+		.contact-inactive {
+			background-image: url(http://laptopmexico.mx/media/imagenes/widget-media/close.png);
+			background-size: 20px; 
+			background-position: center; 
+			background-repeat: no-repeat;
+			position: absolute; 
+			width: 45px; 
+			height: 45px; 
+ 			display: none;
+			border-radius: 50%; 
+			opacity: 0;
+			background-color: #52b4fc;
+		}
+		/* estados del div activador */ 
+		#active-hide {
+			transition-property: all; 
+			transition-duration: 1s; 
+			opacity: 0; 
+		}
+		#active-show {
+			transition-property: all; 
+			transition-duration: .5s; 
+			opacity: 1; 
+			display: block;
+		}
+		.container-widget {
+			width: 60px;
+			position: fixed; 
+			height: 400px;
+			bottom: 15px; left: 15px; 
+			/*border:1px solid green;*/
+		}
+		.contacts-container {
+			transition-property: all; 
+			transition-duration: .5s;
+			width: 100%; 
+			height: 200px;
+			z-index: -10;
+			/*border: 1px solid red;*/
+			bottom: 60px;
+			position: absolute;
+			/*background-color: rgba(0, 0, 0, 0.4);*/
+		}
+		#contacts-container-hover {
+			transition-property: all; 
+			z-index: 10;
+			transition-duration: .5s;
+			height: 240px; 
+		}
+		.contact-option {
+			transition-property: all; 
+			transition-duration: .5s;
+			width: 45px; 
+			height: 45px;
+			display: inline-block;
+			border-radius: 50%;
+			opacity: 0;
+			margin-bottom: -120px; 
+		}
+		.effect {
+			transition-property: all; 
+			transition-duration: .5s;
+			margin-bottom: 10px; 
+			opacity: 1; 
+		 }
+		 .contact-activator:hover {
+		 	cursor: pointer;
+		 }
+		 .contact-option:hover {
+		 	cursor: pointer;
+		 	transition-property: all; 
+		 	transition-duration: .5s;
+		 	-webkit-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+			-moz-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+			box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+
+		 }
+		 .contact-active:hover .message-contacts {
+		 	transition-property: all; 
+		 	transition-duration: .5s;
+		 	opacity: 1; 
+		 	-webkit-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+			-moz-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+			box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.75);
+		 }
+
+		/* tooltip*/ 		 
+		 .message-contacts {
+		 	transition-property: all; 
+		 	transition-duration: .5s;
+		 	position: absolute; 
+		 	background-color: white;
+		 	height: 25px; 
+		 	bottom: 5px; 
+		 	opacity: 1; 
+		 	left: 60px; 
+		 	width: 150px; 
+			box-shadow: #BDB7B7 -2px 0px 12px;
+			border-radius: 4px; 
+			color: #8f8484;
+			font-family: arial;
+			text-align: center; 
+			padding-top: 5px; 
+			margin-bottom: 5px;
+		 }
+		 #message-contacts-hover {
+		 	transition-property: all; 
+		 	transition-duration: .5s;
+		 	opacity: 1; 
+		 }
+		 .message-contacts::after {
+		 	content: "";
+		    position: absolute;
+		    top: 33%;
+		    left: -8px;
+		    margin-left: -5px;
+		    border-width: 6px;
+		    border-style: solid;
+		    transform: rotate(90deg);
+		    border-color: rgba(145, 145, 145, 0.4) transparent transparent transparent;
+		 }
+		 /*tooltip*/ 
+
+		 /* bullets de contacto */ 
+		 .messenger-contact {
+		 	background-image: url(http://laptopmexico.mx/media/imagenes/widget-media/fb-messenger-logo.png); 
+		 	background-size: cover;
+		 	background-repeat: no-repeat;
+		 	background-position: -3px -2px;
+    		background-size: 52px!important;
+		 }
+		 .telephone-contact {
+		 	background-image: url(http://laptopmexico.mx/media/imagenes/widget-media/telefono-fijo-logo.png); 
+		 	background-repeat: no-repeat; 
+		 	background-size: 55px!important;
+    		background-position: -4px -4px;
+		 }
+		 .whatsapp-contact {
+		 	background-image: url(http://laptopmexico.mx/media/imagenes/widget-media/whapp.png); 
+		 	background-size: 70%;
+		 	background-color: #2cb742; 
+		 	background-position: center;
+		 	background-repeat: no-repeat;
+		 }
+		 .mail-contact {
+		 	background-image: url(http://laptopmexico.mx/media/imagenes/widget-media/email-logo.png); 
+		 	background-size: 72%;
+    		background-position: 7px 10px; 
+		 	background-repeat: no-repeat;
+		 	background-color: #ff9800;
+		 }
+		 /* bullets de contacto */ 
+
+		 div[data-tooltip-messenger]:hover::after {
+		 	content: attr(data-tooltip-messenger);
+		 	padding: 5px;  
+		 	text-align: center;  
+		 	background-color: #bababa;
+		 	position: absolute; 
+		 	left: -100px; 
+		 	margin-top: 15px; 
+		 	border-radius: 4px; 
+		 }
+		 div[data-tooltip-telephone]:hover::after {
+		 	content: attr(data-tooltip-telephone);
+		 	padding: 5px;  
+		 	text-align: center;  
+		 	background-color: #bababa;
+		 	position: absolute; 
+		 	left: -100px; 
+		 	margin-top: 15px; 
+		 	border-radius: 4px; 	
+		 }
+		 div[data-tooltip-whatsapp]:hover::after {
+		 	content: attr(data-tooltip-whatsapp);
+		 	padding: 5px;  
+		 	text-align: center;  
+		 	background-color: #bababa;
+		 	position: absolute; 
+		 	left: -100px; 
+		 	margin-top: 15px; 
+		 	border-radius: 4px; 	
+		 }
+		 div[data-tooltip-mail]:hover::after {
+		 	content: attr(data-tooltip-mail);
+		 	padding: 5px;  
+		 	text-align: center;  
+		 	background-color: #bababa;
+		 	position: absolute; 
+		 	left: -100px; 
+		 	margin-top: 15px; 
+		 	border-radius: 4px; 	
+		 }
+ 
+ /* messenger window +++++++++++++++++++++++++++++++++++++++++++++++++++ */ 
+		 .messenger-window {
+		 	transition-property: all; 
+		 	transition-duration: .3s;
+		 	width: 280px; 
+		 	bottom: 60px; 
+		 	z-index: -2; 
+		 	left: 0px;
+		 	border-radius: 4px; 
+		 	position: absolute; 
+		 	opacity: 0; 
+		 }
+		 #show-messenger-window {
+			animation-name: windowContactAnimation; 
+		 	animation-duration: .3s;
+		 	height: 340px; 
+		 	width: 280px; 
+		 	bottom: 70px; 
+		 	display: block; 
+		 	right: 0px; 
+		 	z-index: 9999;
+		 	border-radius: 4px; 
+		 	position: absolute; 
+		 	opacity: 1; 	
+		 }
+		/* show messenger */ 
+		 @keyframes windowContactAnimation {
+		 	from{ opacity: 0; bottom: -10px; }
+		 	to{ opacity: 1;  bottom: 70px; }
+		 }
+		 .close-window-contact:hover {
+		 	cursor: pointer;
+		 	/*color: red;*/ 
+		 }
+
+
+ /*  telephone window wcss +++++++++++++++++++++++++++++++++++++++++++++++++++++  */ 
+		 .telephone-window {
+		 	transition-property: all; 
+		 	transition-duration: .5s;
+		 	height: 155px; 
+		 	width: 235px; 
+		 	bottom: 70px; 
+		 	left: 0px;
+		 	background-color: #fafafa; 
+		 	border-radius: 4px;  
+		 	position: absolute; 
+		 	opacity: 1; 
+		 	animation-name: showTelephoneWindow; 
+		 	animation-duration: .5s;
+		 	-webkit-box-shadow: 0px 0px 20px -3px rgba(92,87,92,1);
+			-moz-box-shadow: 0px 0px 20px -3px rgba(92,87,92,1);
+			box-shadow: 0px 0px 20px -3px rgba(92,87,92,1);
+		 }
+		 @keyframes showTelephoneWindow {
+		 	from { opacity: 0; bottom: 60px }
+		 	to { opacity: 1; bottom: 70px; }
+		 }
+		 #telephone-window-hide {
+		 	animation-name: telephoneWindowClose; 
+		 	opacity: 0; 
+		 	bottom: 60px; 
+		 	animation-duration: .5s;
+		 	z-index: -10;
+		 }
+		 @keyframes telephoneWindowClose {
+		 	from  { opacity: 1; bottom: 70px; }
+		 	to { opacity: 0; bottom: 60px; }
+		 }
+		 .header-window-telephone { 
+		 	background-color: #ec5923; 
+		 	border-radius: 5px 5px 0px 0px; 
+		 	height: 40px; 
+		 	text-align: center;
+		 }
+		 .content-header-telephone { 
+		  	color: white; 
+		  	font-family: arial;
+		  	display: inline-block;
+		  	margin-top: 10px; 
+		  	font-weight: 500;  
+		  	font-size: 20px;
+		 }
+
+  /* correo window ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/ 
+		 .correo-window {
+		 	transition-property: all; 
+		 	transition-duration: .5s;
+		 	height: 155px; 
+		 	width: 235px; 
+		 	bottom: 70px; 
+		 	left: 0px;
+		 	background-color: #fafafa; 
+		 	border-radius: 4px;  
+		 	position: absolute; 
+		 	opacity: 1; 
+		 	animation-name: showCorreoWindow; 
+		 	animation-duration: .5s;
+		 	-webkit-box-shadow: 0px 0px 20px -3px rgba(92,87,92,1);
+			-moz-box-shadow: 0px 0px 20px -3px rgba(92,87,92,1);
+			box-shadow: 0px 0px 20px -3px rgba(92,87,92,1);
+		 }
+		  @keyframes showCorreoWindow {
+		 	from { opacity: 0; bottom: 60px }
+		 	to { opacity: 1; bottom: 70px; }
+		 }
+		 #correo-window-hide {
+		 	animation-name: correoWindowClose; 
+		 	opacity: 0; 
+		 	bottom: 60px; 
+		 	animation-duration: .5s;
+		 	z-index: -10;
+		 }
+		 @keyframes correoWindowClose {
+		 	from  { opacity: 1; bottom: 70px; }
+		 	to { opacity: 0; bottom: 60px; }
+		 } 
+  		/* evíar correo */ 
+  		.send-mail-contact {
+  			height: 25px; 
+  			background-color: orange;
+  			width: 100px;
+  			margin-top: 5px; 
+  			border-radius: 4px; 
+  			color: white; 
+  			font-family: arial;
+  			padding-left: 4px; 
+  			padding-right: 4px;
+  			transition-property: all; 
+  			transition-duration: .2s;
+  		}
+  		.send-mail-contact:hover {
+  			cursor: pointer;
+  			transition-property: all; 
+  			transition-duration: .2s;
+  			box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 2px;
+  		}
+  		.send-mail-contact span {
+  			display: inline-block;
+  			margin-top: 4px; 
+  		}
+
+  		/* -------------- */
+  		.close-div-msn {
+  			background-color: #0084ff; 
+  			border-radius: 5px 5px 0px 0px; 
+  			height: 40px; 
+  			text-align: center;
+  		}
+  		.close-window-contact {
+  			float: right; 
+  			padding: 4px; 
+  			color:white; 
+  			padding-right: 7px; 
+  			font-weight: bold; 
+  			font-size: 25px;
+  		}
+  		.window-msn-header {
+  			color: white; 
+  			font-family: arial; 
+  			display: inline-block; 
+  			margin-top: 10px; 
+  			font-weight: 500;  
+  			font-size: 20px;
+  		}
+  		.contact-telephone-close {
+  			float: right; 
+  			padding: 4px; 
+  			color:white; 
+  			padding-right: 7px; 
+  			font-weight: bold; 
+  			font-size: 25px;
+  		}
+  		.div-telephone-content {
+  			text-align: center; 
+  			padding-top: 20px; 
+  		}
+  		.div-telephone-num {
+  			font-family: arial; 
+  			font-size: 22px; 
+  			color: gray;
+  		}
+  		.contact-correo-close {
+  			float: right; 
+  			padding: 4px; 
+  			color:white; 
+  			padding-right: 7px; 
+  			font-weight: bold; 
+  			font-size: 22px;
+  		}
+  		.mail-contact-header {
+  			text-align: center; 
+  			padding-top: 20px;
+  		}
+  		.contact-header-content {
+  			font-family: arial; 
+  			font-size: 15px; 
+  			color: gray;
+  		}
+  		.mail-send {
+  			text-align: -webkit-center;
+  		}
+
+  		@media( max-width: 500px){
+  			.message-contacts {
+  				display: none;
+  			}
+  		}
+	</style>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.11';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<body>
+
+<div>
+</div>
+		<div class="container-widget">
+		  <div class="contacts-container">
+		  	<div data-tooltip-messenger="Messenger" class="contact-option messenger-contact">
+		  	</div>
+		  	<div data-tooltip-telephone="Teléfono" class="contact-option telephone-contact"></div>
+		  	<div data-tooltip-whatsapp="Whatsapp" class="contact-option whatsapp-contact"></div>
+		  	<div data-tooltip-mail="Correo" class="contact-option mail-contact"></div>
+		  </div>		
+		<div class="message-contacts"> ¿Necesita ayuda? </div>
+			<div class="contact-activator">
+				<div class="contact-active">
+				</div>
+				<div class="contact-inactive"> 
+				</div>  
+			</div>
+		  		<!-- ventana messenger --> 
+		  		<div class="messenger-window">
+		  			<div class="close-div-msn">
+		  				<span class="close-window-contact">&times;</span>
+		  				 <span class="window-msn-header"> Facebook Messenger </span>
+		  			</div>
+		  			<div class="fb-page" data-href="https://www.facebook.com/HyundaiSolanaGonzalezGalloGuadalajara/" data-tabs="messages" data-width="280" data-height="300" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/HyundaiSolanaGonzalezGalloGuadalajara" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/HyundaiSolanaGonzalezGalloGuadalajara/">Arome</a></blockquote></div>
+		  		</div>
+		  		<!-- ventana teléfono --> 
+		  		<div class="telephone-window" id="telephone-window-hide">
+		  			   <div class="header-window-telephone">
+		  				  <span class="close-window-contact contact-telephone-close">&times;</span>
+		  				  <span class="content-header-telephone"> Teléfono </span>
+		  				</div>
+		  				<div class="div-telephone-content">
+		  					<span class="div-telephone-num">--</span>	
+		  				</div>
+		  		</div>
+		  		<!-- ventana @email --> 
+		  		<div class="correo-window" id="correo-window-hide">
+		  			   <div class="header-window-telephone">
+		  				  <span class="close-window-contact contact-correo-close">&times;</span>
+		  				  <span class="content-header-telephone">@ Correo </span>
+		  				</div>
+		  				<div class="mail-contact-header">
+		  					<span class="contact-header-content">suzukiglezgallo@suzukiglezgallo.com</span>	
+		  					<div class="mail-send">
+		  					  <a href="mailto:suzukiglezgallo@suzukiglezgallo.com">
+			  					<div class="send-mail-contact">
+			  						<span>Envíar correo</span>
+			  					</div>
+			  				  </a>
+		  					</div> 
+		  				</div>
+		  		</div>
+		</div>
+
+	<script type="text/javascript">
+			/* código en JS puro |compatible */ 
+			contactsActive = document.getElementsByClassName('contact-active')[0]; 
+
+			contactsActive.onclick = function() {
+				getElementsClass('contact-activator').id="roll-open"; 
+				getElementsClass('contact-active').id="active-hide"; 
+				getElementsClass('contact-inactive').id="active-show"; 
+				getElementsClass('contacts-container').id="contacts-container-hover"; 
+				contactsOpenBullets('contact-option', 'effect'); 
+			}
+
+			activatorContacts = document.getElementsByClassName('contact-activator')[0]; 
+
+			activatorContacts.onmouseover = function() {
+				getElementsClass('message-contacts').id='message-contacts-hover';
+			}
+			activatorContacts.onmouseout = function() {
+				getElementsClass('message-contacts').id='';
+			}
+
+			function contactsOpenBullets(elemento, clase) {
+				contactos = document.getElementsByClassName(elemento); 
+				for( i = 0; i < contactos.length; i++ ) {
+					contactos[i].classList.add(clase);
+				} 
+			}
+
+			function contactsCloseBullets(elemento, clase) {
+				contactos1 = document.getElementsByClassName(elemento); 
+				for( i = 0; i < contactos.length; i++ ) {
+					//contactos1[i].classList.add('contact-option'); 
+					contactos1[i].classList.remove(clase);
+				} 
+			}
+
+			contactsInactive = document.getElementsByClassName('contact-inactive')[0]; 
+
+			contactsInactive.onclick = function() {
+				changeActivatorState(); 
+                getElementsClass('contacts-container').id=""; 
+                getElementsClass('messenger-window').id = ''; 
+                getElementsClass('correo-window').id = 'correo-window-hide'; 
+                getElementsClass('telephone-window').id = 'telephone-window-hide'; 
+			}
+
+			function setFunctionsClass(element, accion) {
+				element.onclick = accion; 
+			} 
+
+			function getElementsClass(clase) {
+				return document.getElementsByClassName(clase)[0]; 
+			}
+
+		 	function changeActivatorState() {
+		 		contactsCloseBullets('contact-option', 'effect'); 
+				getElementsClass('contact-active').id="active-show"; 
+				getElementsClass('contact-activator').id="roll-close"; 
+                getElementsClass('contact-inactive').id="active-hide"; 
+		 	}
+
+			/* window messenger 
+			   show 
+			*/ 
+			setFunctionsClass(getElementsClass('messenger-contact'), function(){ 
+				getElementsClass('messenger-window').id = 'show-messenger-window'; 
+				contactsCloseBullets('contact-option', 'effect');
+			 }); 
+
+			setFunctionsClass(getElementsClass('close-window-contact'), function() {
+				getElementsClass('messenger-window').id = ''; 
+				changeActivatorState(); 
+			}); 
+
+			/* window whatsapp 
+			   show  
+			   wjs
+			*/
+
+			setFunctionsClass(getElementsClass('telephone-contact'), function() {
+				getElementsClass('telephone-window').id=''; 
+				contactsCloseBullets('contact-option', 'effect');
+				getElementsClass('contacts-container').id=''; 
+			}); 
+
+			setFunctionsClass(getElementsClass('contact-telephone-close'), function(){
+				getElementsClass('telephone-window').id = 'telephone-window-hide'; 
+				changeActivatorState(); 
+			}); 
+
+
+			/*-----------------------------------------------------
+			 |  window whatsapp   								  | 
+			 -----------------------------------------------------*/ 
+
+			setFunctionsClass( getElementsClass('whatsapp-contact'), function() {
+				  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+   					window.location.href = 'https://api.whatsapp.com/send?l=es&phone=(+52)%203322035964'; 
+				} else {
+
+					var windowSize = {
+					    width: 500,
+					    height: 500,
+					};
+					var windowLocation = {
+					    left:  (window.screen.availLeft + (window.screen.availWidth / 2)) - (windowSize.width / 2),
+					    top: (window.screen.availTop + (window.screen.availHeight / 2)) - (windowSize.height / 2)
+					};
+				window.open('https://web.whatsapp.com/send?l=es&phone=(+52)%203322035964', '_blank', 'width=' + windowSize.width + ', height=' + windowSize.height + ', left=' + windowLocation.left + ', top=' + windowLocation.top);
+				}
+			}); 
+			/*-----------------------------------------------------
+			 |  email window 									  | 
+			 -----------------------------------------------------*/ 
+
+			 setFunctionsClass( getElementsClass('mail-contact'), function() {
+			 	getElementsClass('correo-window').id=''; 
+			 	getElementsClass('contacts-container').id=''; 
+				contactsCloseBullets('contact-option', 'effect');
+			 } );
+
+			 setFunctionsClass( getElementsClass('contact-correo-close'), function() {
+			 	getElementsClass('correo-window').id = 'correo-window-hide'; 
+				changeActivatorState(); 
+			 }); 
+	</script>
+
+		<div style="padding: 20px; font-family: arial;">
+			<h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h1>
+			<h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h1>
+			<h4>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h1>
+		</div>
+
+</body>
+</html>
