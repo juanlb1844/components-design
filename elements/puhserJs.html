@@ -24,8 +24,8 @@
 
 .box {
     background-color: #6f5499;
-    height: 200px;
-    width: 23%;
+    height: 50px;
+    width: 100%;
     float: left;
     margin: 1%;
     padding: 20px;
@@ -80,19 +80,11 @@
 
 <div class="boxes-container" data-boxes-cont>
     <div class="box">
-        <h3 class="box-title">Blah blah blah</h3>
+        <h5 class="box-title">Blah blah blah</h5>
         <p class="box-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.</p>
     </div>
     <div class="box">
-        <h3 class="box-title">Blah blah blah</h3>
-        <p class="box-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.</p>
-    </div>
-    <div class="box">
-        <h3 class="box-title">Blah blah blah</h3>
-        <p class="box-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.</p>
-    </div>
-    <div class="box">
-        <h3 class="box-title">Blah blah blah</h3>
+        <h5 class="box-title">Blah blah blah</h5>
         <p class="box-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.</p>
     </div>
 </div>
@@ -114,32 +106,9 @@
 
 var fakeData = [{
     title: 'Blah blah blah',
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.'
-}, {
-    title: 'Blah blah blah',
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.'
-}, {
-    title: 'Blah blah blah',
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.'
-}, {
-    title: 'Blah blah blah',
-    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.'
+    content: 'lorem'
 }];
 
-/* 
-$('.load-more').on('click', 'link-wrapper',  function(event) {
-    alert('..');  
-    event.preventDefault();
-    var newItemsHtml = '';
-
-    fakeData.forEach(function(item) {
-        newItemsHtml += boxTemplate
-            .replace(/-title-/g, item.title)
-            .replace(/-content-/g, item.content)
-    });
-
-    $cont.append(newItemsHtml);
-}); */ 
 $('.load-more').click( function( ) { 
     var newItemsHtml = '';
 
@@ -149,6 +118,7 @@ $('.load-more').click( function( ) {
             .replace(/-content-/g, item.content)
     });
 
-    $cont.append(newItemsHtml); }); 
+    $cont.append(newItemsHtml); 
+}); 
 	//el.addEventListener("transitionend", updateTransition, true);
 </script>
