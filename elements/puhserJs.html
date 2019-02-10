@@ -3,7 +3,152 @@
 <head>
 	<title>Pusher</title>
 </head>
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+	<style type="text/css">
+	* {
+    box-sizing: border-box;
+}
+
+.boxes-container {
+    padding: 20px;
+}
+
+.boxes-container:after {
+    display: table;
+    content: ' ';
+    clear: both;
+}
+
+.box {
+    background-color: #6f5499;
+    height: 200px;
+    width: 23%;
+    float: left;
+    margin: 1%;
+    padding: 20px;
+    color: white;
+    animation: slide-up 0.4s ease;
+}
+
+@media(max-width:767px) {
+    .box {
+        width: 100%;
+        margin-right: 0;
+        margin-left: 0;
+    }
+}
+
+.box-title {
+    margin: 0;
+    font-weight: normal;
+    font-size: 30px;
+}
+
+.link-wrapper {
+    text-align: center;
+}
+
+.load-more {
+    display: inline-block;
+    background-color: #6f5499;
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    transition: background 0.2s ease-in-out;
+}
+
+.load-more:hover {
+    background: #8364b3;
+}
+
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+	</style>
+
 <body>
-	
+
+<div class="boxes-container" data-boxes-cont>
+    <div class="box">
+        <h3 class="box-title">Blah blah blah</h3>
+        <p class="box-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.</p>
+    </div>
+    <div class="box">
+        <h3 class="box-title">Blah blah blah</h3>
+        <p class="box-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.</p>
+    </div>
+    <div class="box">
+        <h3 class="box-title">Blah blah blah</h3>
+        <p class="box-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.</p>
+    </div>
+    <div class="box">
+        <h3 class="box-title">Blah blah blah</h3>
+        <p class="box-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.</p>
+    </div>
+</div>
+<div class="link-wrapper">
+    <a href="#" class="load-more" data-more>Load mas</a>
+</div>
+<script type="text/template" data-template>
+    <div class="box">
+        <h3 class="box-title">-title-</h3>
+        <p class="box-content">-content-</p>
+    </div>
+</script>
 </body>
 </html>
+
+<script type="text/javascript">
+	var $cont = $('[data-boxes-cont]');
+	var boxTemplate = $('[data-template]').html();
+
+var fakeData = [{
+    title: 'Blah blah blah',
+    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.'
+}, {
+    title: 'Blah blah blah',
+    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.'
+}, {
+    title: 'Blah blah blah',
+    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.'
+}, {
+    title: 'Blah blah blah',
+    content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, repudiandae. Vero qui necessitatibus hic iure, voluptatem consectetur suscipit magni perferendis dicta fuga nisi velit.'
+}];
+
+/* 
+$('.load-more').on('click', 'link-wrapper',  function(event) {
+    alert('..');  
+    event.preventDefault();
+    var newItemsHtml = '';
+
+    fakeData.forEach(function(item) {
+        newItemsHtml += boxTemplate
+            .replace(/-title-/g, item.title)
+            .replace(/-content-/g, item.content)
+    });
+
+    $cont.append(newItemsHtml);
+}); */ 
+$('.load-more').click( function( ) { 
+    var newItemsHtml = '';
+
+    fakeData.forEach(function(item) {
+        newItemsHtml += boxTemplate
+            .replace(/-title-/g, item.title)
+            .replace(/-content-/g, item.content)
+    });
+
+    $cont.append(newItemsHtml); }); 
+	//el.addEventListener("transitionend", updateTransition, true);
+</script>
